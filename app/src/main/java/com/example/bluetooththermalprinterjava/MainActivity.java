@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 checkPermission();
             }
         });
+
+        binding.disconnectButton.setOnClickListener(view -> {
+            disconnectPrinter();
+        });
     }
 
     private void checkPermission() {
@@ -257,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+
     private void printData(String data) {
         try {
             if (outputStream != null) {
@@ -283,4 +288,18 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void disconnectPrinter() {
+        try {
+            if (socket != null) {
+                socket.close();
+                socket = null;
+                Toast.makeText(this, "Printer disconnected", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            Toast.makeText(this, "Error disconnecting printer", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
 }
+
